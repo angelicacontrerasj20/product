@@ -28,6 +28,7 @@ import com.codecraft.product.domain.entity.User;
 import com.codecraft.product.domain.repository.SaleRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.codecraft.product.util.TraceUtil;
 
 @Service
 public class ProductService {
@@ -48,7 +49,8 @@ public class ProductService {
      * @return Modelo con los datos del producto y su inventario.
      */
     public ProductAddModel addProduct(ProductModel productModel) {
-        logger.info("Agregando nuevo producto: {}", productModel.getName());
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.addProduct " + traceId + " " + productModel.getName());
         try {
             Product product = ProductConverter.toEntity(productModel);
             product.setRegisterDate(DateUtil.now());
@@ -76,7 +78,8 @@ public class ProductService {
      * @return Lista de modelos de productos con inventario.
      */
     public List<ProductAddModel> listProducts(Boolean active) {
-        logger.info("Listando productos con filtro activo: {}", active);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.listProducts " + traceId + " " + active);
         List<Product> products = productRepository.findAll();
         List<ProductAddModel> result = new ArrayList<>();
         for (Product product : products) {
@@ -94,7 +97,8 @@ public class ProductService {
      * @return Optional con el modelo del producto y su inventario si existe.
      */
     public Optional<ProductAddModel> findById(Long id) {
-        logger.info("Buscando producto por ID: {}", id);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.findById " + traceId + " " + id);
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
@@ -111,7 +115,8 @@ public class ProductService {
      * @return Modelo actualizado del producto.
      */
     public ProductModel updateProductDescription(Long id, ProductPatchModel productPatchModel) {
-        logger.info("Actualizando precio de producto ID: {}", id);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.updateProductDescription " + traceId + " " + id);
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
@@ -131,7 +136,8 @@ public class ProductService {
      * @return Modelo actualizado del producto.
      */
     public ProductAddModel updateProduct(Long id, ProductModel productModel) {
-        logger.info("Actualizando producto ID: {}", id);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.updateProduct " + traceId + " " + id);
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
@@ -160,7 +166,8 @@ public class ProductService {
      */
     @Transactional
     public SaleModel buyMultipleProducts(ProductPurchaseModel request) {
-        logger.info("Procesando compra múltiple para usuario ID: {}", request.getUserId());
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.buyMultipleProducts " + traceId + " " + request.getUserId());
         try {
             validatePurchaseItems(request);
             List<SaleItem> saleItems = new ArrayList<>();
@@ -302,7 +309,8 @@ public class ProductService {
      */
     @Transactional
     public void deleteProduct(Long id) {
-        logger.info("Eliminando producto y su inventario ID: {}", id);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.deleteProduct " + traceId + " " + id);
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
@@ -323,7 +331,8 @@ public class ProductService {
      * @return Modelo actualizado del producto.
      */
     public ProductModel updateProductActiveStatus(Long id, Boolean active) {
-        logger.info("Actualizando estado activo de producto ID: {} a {}", id, active);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("ProductService.updateProductActiveStatus " + traceId + " " + id + " " + active);
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();

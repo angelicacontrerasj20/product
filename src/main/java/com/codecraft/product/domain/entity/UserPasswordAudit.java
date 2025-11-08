@@ -8,7 +8,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuario_auditoria")
+@Table(name = "usuario_auditoria",
+       indexes = {
+           @Index(name = "idx_auditoria_usuario_id", columnList = "usario_id")
+       })
 public class UserPasswordAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

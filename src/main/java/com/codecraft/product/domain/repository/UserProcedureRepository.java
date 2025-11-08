@@ -28,4 +28,15 @@ public class UserProcedureRepository {
                 .withProcedureName("USUARIOALT");
         return jdbcCall.execute(inParams);
     }
+
+    /**
+     * Ejecuta el procedimiento almacenado USUARIOMOD para modificar usuario.
+     * @param inParams Mapa de parámetros de entrada
+     * @return Mapa con el resultset del procedimiento
+     */
+    public Map<String, Object> modificarUsuario(Map<String, Object> inParams) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withProcedureName("USUARIOMOD");
+        return jdbcCall.execute(inParams);
+    }
 }

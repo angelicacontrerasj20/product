@@ -11,7 +11,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "venta")
+@Table(name = "venta",
+       indexes = {
+           @Index(name = "idx_venta_usuario_id", columnList = "usuario_id"),
+           @Index(name = "idx_venta_fecha", columnList = "fecha")
+       })
 public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

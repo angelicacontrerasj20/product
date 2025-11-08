@@ -10,6 +10,7 @@ import com.codecraft.product.mapper.UserModelMapper;
 import com.codecraft.product.util.DateUtil;
 import com.codecraft.product.util.JwtUtil;
 import com.codecraft.product.util.PasswordUtil;
+import com.codecraft.product.util.TraceUtil;
 import com.codecraft.product.web.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,17 +46,14 @@ public class UserService {
     @Autowired
     private UserProcedureRepository userProcedureRepository;
 
-    public UserService() {
-        logger.info("UserService inicializado correctamente - prueba de log");
-    }
-
     /**
      * Agrega un nuevo usuario al sistema.
      * @param userModel Modelo con los datos del usuario.
      * @return Modelo del usuario agregado.
      */
     public UserModel addUser(UserModel userModel) {
-        logger.info("Alta de usuario por procedimiento almacenado: {}", userModel.getUserName());
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.addUser " + traceId + " " + userModel.getUserName());
         Date dateOfBirth = userModel.getDateOfBirth() != null ? Date.valueOf(userModel.getDateOfBirth()) : Date.valueOf("1900-01-01");
         Timestamp registerDate = userModel.getRegisterDate() != null ? DateUtil.toTimestamp(userModel.getRegisterDate()) : DateUtil.toTimestamp(DateUtil.now());
         Timestamp updateDate = userModel.getUpdateDate() != null ? DateUtil.toTimestamp(userModel.getUpdateDate()) : DateUtil.toTimestamp(DateUtil.now());
@@ -74,7 +72,7 @@ public class UserService {
             );
 
         Map<String, Object> result = userProcedureRepository.altaUsuario(inParams);
-        UserModel user = ProcedureResultAddConverter.convert(result, "usuario_id", UserModelMapper::map);
+        UserModel user = ProcedureResultAddConverter.convert(result, "usuario_id", UserModelMapper::mapAdd);
         return user;
     }
 
@@ -84,15 +82,21 @@ public class UserService {
      * @return Modelo actualizado del usuario.
      */
     public UserModel updateUser(UserUpdateModel userUpdateModel) {
-        logger.info("Actualizando usuario ID: {}", userUpdateModel.getId());
-        Optional<User> userOpt = userRepository.findById(userUpdateModel.getId());
-        if (userOpt.isPresent()) {
-            User originalUpdate = userOpt.get();
-            UserUpdateConverter.updateEntity(userUpdateModel, originalUpdate);
-            User updated = userRepository.save(originalUpdate);
-            return userConverter.entityToModel(updated);
-        }
-        throw new ResourceNotFoundGlobalException(ErrorCode.USER_NOT_FOUND);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.updateUser " + traceId + " " + userUpdateModel.getId());
+        Map<String, Object> inParams = Map.of(
+            "p_usuarioId", userUpdateModel.getId(),
+            "p_primerNombre", userUpdateModel.getFirstName(),
+            "p_apellidoPaterno", userUpdateModel.getLastName(),
+            "p_apellidoMaterno", userUpdateModel.getMiddleName(),
+            "p_fechaNacimiento", userUpdateModel.getDateOfBirth(),
+            "p_genero", userUpdateModel.getGender(),
+            "p_estadoNacimiento", userUpdateModel.getStateOfBirth(),
+            "p_fechaActualizacion", DateUtil.toTimestamp(DateUtil.now())
+        );
+        Map<String, Object> result = userProcedureRepository.modificarUsuario(inParams);
+        UserModel user = ProcedureResultAddConverter.convert(result, "usuario_id", UserModelMapper::mapUpdate);
+        return user;
     }
 
     /**
@@ -102,7 +106,8 @@ public class UserService {
      * @return Modelo actualizado del usuario.
      */
     public UserModel updatePassword(Long id, UserUpdatePasswordModel userUpdatePasswordModel) {
-        logger.info("Actualizando contraseña de usuario ID: {}", id);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.updatePassword " + traceId + " " + id);
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -125,7 +130,8 @@ public class UserService {
      * @return Optional con el modelo del usuario si existe.
      */
     public Optional<UserModel> findById(Long id) {
-        logger.info("Buscando usuario por ID: {}", id);
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.findById " + traceId + " " + id);
         return userRepository.findById(id).map(userConverter::entityToModel);
     }
 
@@ -134,7 +140,8 @@ public class UserService {
      * @return Lista de modelos de usuario.
      */
     public List<UserModel> listUsers() {
-        logger.info("Listando todos los usuarios");
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.listUsers " + traceId);
         return userRepository.findAll().stream()
             .map(userConverter::entityToModel)
             .toList();
@@ -146,6 +153,8 @@ public class UserService {
      * @return Modelo del usuario si existe, sin contraseña.
      */
     public UserGetModel findByUserName(String userName) {
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.findByUserName " + traceId + " " + userName);
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new ResourceNotFoundGlobalException(ErrorCode.USER_NOT_FOUND));
         return UserGetConverter.entityToModel(user);
@@ -157,6 +166,8 @@ public class UserService {
      * @return Token JWT si la autenticación es exitosa.
      */
     public String authenticateUser(LoginRequestModel loginRequestModel) {
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.authenticateUser " + traceId + " " + loginRequestModel.getUsername());
         try {
             User user = userRepository.findByUserName(loginRequestModel.getUsername())
                     .orElseThrow(() -> new ResourceNotFoundGlobalException(ErrorCode.USER_NOT_FOUND));
@@ -181,6 +192,8 @@ public class UserService {
      * @return Lista de modelos de usuario que coinciden parcialmente en cualquier campo.
      */
     public List<UserModel> findByNameAndSurnameLike(String searchText) {
+        String traceId = TraceUtil.generateTraceId();
+        logger.info("UserService.findByNameAndSurnameLike " + traceId + " " + searchText);
         if (searchText == null || searchText.trim().isEmpty()) {
             return List.of();
         }

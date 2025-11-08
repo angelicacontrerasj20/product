@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "productoinventario")
+@Table(name = "productoinventario",
+       indexes = {
+           @Index(name = "idx_inventario_producto_id", columnList = "producto_id")
+       })
 public class ProductInventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

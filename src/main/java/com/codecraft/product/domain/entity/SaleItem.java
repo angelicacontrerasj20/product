@@ -9,7 +9,11 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "productoventa")
+@Table(name = "productoventa",
+       indexes = {
+           @Index(name = "idx_saleitem_venta_id", columnList = "venta_id"),
+           @Index(name = "idx_saleitem_producto_id", columnList = "producto_id")
+       })
 public class SaleItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +35,3 @@ public class SaleItem {
     private BigDecimal unitPrice;
 
 }
-

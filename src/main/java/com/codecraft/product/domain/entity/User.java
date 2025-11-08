@@ -10,9 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuario", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "nombre_usuario")
-})
+@Table(name = "usuario",
+    uniqueConstraints = {@UniqueConstraint(columnNames = "nombre_usuario")},
+    indexes = {
+        @Index(name = "idx_usuario_nombre_usuario", columnList = "nombre_usuario")
+    }
+)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

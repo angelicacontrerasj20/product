@@ -79,6 +79,68 @@
      END$$
      DELIMITER ;
 
+     -- Modificación de Usuario
+     DELIMITER $$
+     CREATE PROCEDURE USUARIOMOD(
+         IN p_usuarioId INT,
+         IN p_primerNombre VARCHAR(50),
+         IN p_apellidoPaterno VARCHAR(50),
+         IN p_apellidoMaterno VARCHAR(50),
+         IN p_fechaNacimiento DATE,
+         IN p_genero CHAR(1),
+         IN p_estadoNacimiento VARCHAR(50),
+         IN p_fechaActualizacion DATETIME
+     )
+     proc: BEGIN
+         DECLARE v_count INT DEFAULT 0;
+         DECLARE sqlerr INT DEFAULT 0;
+         DECLARE sqlmsg TEXT DEFAULT '';
+         DECLARE Err_Codigo INT DEFAULT 0;
+         DECLARE Err_Mensaj VARCHAR(255) DEFAULT '';
+
+         -- Manejador genérico de excepciones: devuelve código y mensaje y hace rollback
+         DECLARE EXIT HANDLER FOR SQLEXCEPTION
+         BEGIN
+             GET DIAGNOSTICS CONDITION 1 Err_Codigo = MYSQL_ERRNO, Err_Mensaj = MESSAGE_TEXT;
+             ROLLBACK;
+             SELECT Err_Codigo AS codigo, Err_Mensaj AS mensaje;
+         END;
+
+         START TRANSACTION;
+
+         -- Verificar existencia del usuario
+         SELECT COUNT(*) INTO v_count FROM usuario WHERE usuario_id = p_usuarioId;
+         IF v_count = 0 THEN
+             SET Err_Codigo = 40401;
+             SET Err_Mensaj = 'Usuario no encontrado';
+             ROLLBACK;
+             SELECT Err_Codigo, Err_Mensaj;
+             LEAVE proc;
+         END IF;
+
+         -- Actualizar únicamente los campos solicitados
+         UPDATE usuario
+         SET
+             primer_nombre = p_primerNombre,
+             apellido_paterno = p_apellidoPaterno,
+             apellido_materno = p_apellidoMaterno,
+             fecha_nacimiento = p_fechaNacimiento,
+             genero = p_genero,
+             estado_nacimiento = p_estadoNacimiento,
+             fecha_actualizacion = p_fechaActualizacion
+         WHERE usuario_id = p_usuarioId;
+
+         COMMIT;
+
+         -- Devolver fila actualizada
+         SELECT usuario_id, nombre_usuario, contrasenia, primer_nombre, apellido_paterno,
+                apellido_materno, fecha_nacimiento, genero, estado_nacimiento, fecha_registro,
+                fecha_actualizacion
+         FROM usuario
+         WHERE usuario_id = p_usuarioId;
+     END$$
+     DELIMITER ;
+
      -- Trigger para auditar cambios de contraseña
      ALTER TABLE usuario_auditoria MODIFY fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
      DELIMITER $$
@@ -94,6 +156,8 @@
      DELIMITER ;
      ```
 ### Scripts importantes para auditoría de contraseñas
+
+> Nota: El registro en la tabla de auditoría se realiza mediante un trigger en la base de datos. Esto garantiza que el registro de cambios de contraseña no dependa de ningún endpoint o lógica de la aplicación, asegurando la auditoría automática y consistente sin necesidad de lógica personalizada.
 
 - Ejecutar el siguiente script para que la tabla `usuario_auditoria` en el campo `fecha_cambio` obtenga el valor de la fecha y hora de BD:
 
