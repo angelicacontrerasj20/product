@@ -201,7 +201,6 @@ DELIMITER ;
 - `GET /products` - Listar productos (opcional: ?active=true/false)
 - `GET /products/{id}` - Consultar producto por ID
 - `PATCH /products/{id}/active` - Actualizar estado activo/inactivo de producto
-- `POST /products/buy-multiple` - Comprar múltiples productos
 - `PUT /products/{id}` - Actualizar todos los datos de un producto
 - `DELETE /products/{id}` - Eliminar producto y su inventario
 
@@ -213,6 +212,10 @@ DELIMITER ;
 
 ### Autenticación
 - `POST /auth/login` - Login de usuario y generación de token
+
+### Ventas
+- `GET /sales/user/{userId}` - Consultar ventas por usuario
+- `POST /sales/buy-multiple` - Comprar múltiples productos en una sola transacción
 
 ## Notas
 - El proyecto usa Log4j2 para logs, que se guardan en la carpeta `logs/productos`.

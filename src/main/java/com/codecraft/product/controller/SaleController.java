@@ -9,12 +9,14 @@ import com.codecraft.product.web.model.ProductPurchaseModel;
 import com.codecraft.product.web.model.SaleGetModel;
 import com.codecraft.product.web.model.SaleModel;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/sales")
+@Tag(name = "Venta", description = "Operaciones relacionadas con ventas de productos")
 public class SaleController {
     @Autowired
     private SaleService saleService;
