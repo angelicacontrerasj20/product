@@ -115,7 +115,7 @@ public class ProductService {
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
-            product.setPrice(productPatchModel.getPrice());
+            product.setActive(productPatchModel.getActive());
             product.setUpdateDate(DateUtil.now());
             Product updated = productRepository.save(product);
             return ProductConverter.toModel(updated);
@@ -314,6 +314,26 @@ public class ProductService {
             logger.error("Producto no encontrado para eliminar. ID: {}", id);
             throw new ResourceNotFoundGlobalException(ErrorCode.PRODUCT_NOT_FOUND);
         }
+    }
+
+    /**
+     * Actualiza el estado activo/inactivo de un producto por su ID.
+     * @param id ID del producto.
+     * @param active Nuevo estado activo/inactivo.
+     * @return Modelo actualizado del producto.
+     */
+    public ProductModel updateProductActiveStatus(Long id, Boolean active) {
+        logger.info("Actualizando estado activo de producto ID: {} a {}", id, active);
+        Optional<Product> productOpt = productRepository.findById(id);
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            product.setActive(active);
+            product.setUpdateDate(DateUtil.now());
+            Product updated = productRepository.save(product);
+            return ProductConverter.toModel(updated);
+        }
+        logger.error("Producto no encontrado para actualizar estado activo. ID: {}", id);
+        throw new ResourceNotFoundGlobalException(ErrorCode.PRODUCT_NOT_FOUND);
     }
 
 }

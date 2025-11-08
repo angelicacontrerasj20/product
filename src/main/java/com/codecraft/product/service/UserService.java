@@ -1,21 +1,16 @@
 package com.codecraft.product.service;
 
-import com.codecraft.product.converter.UserConverter;
-import com.codecraft.product.converter.UserModelMapper;
-import com.codecraft.product.converter.UserUpdateConverter;
-import com.codecraft.product.converter.ProcedureResultAddConverter;
+import com.codecraft.product.converter.*;
 import com.codecraft.product.domain.entity.User;
 import com.codecraft.product.domain.repository.UserProcedureRepository;
 import com.codecraft.product.domain.repository.UserRepository;
 import com.codecraft.product.exception.ErrorCode;
 import com.codecraft.product.exception.ResourceNotFoundGlobalException;
+import com.codecraft.product.mapper.UserModelMapper;
 import com.codecraft.product.util.DateUtil;
 import com.codecraft.product.util.JwtUtil;
 import com.codecraft.product.util.PasswordUtil;
-import com.codecraft.product.web.model.LoginRequestModel;
-import com.codecraft.product.web.model.UserModel;
-import com.codecraft.product.web.model.UserUpdateModel;
-import com.codecraft.product.web.model.UserUpdatePasswordModel;
+import com.codecraft.product.web.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,14 +141,14 @@ public class UserService {
     }
 
     /**
-     * Busca un usuario por su nombre de usuario.
+     * Busca un usuario por su nombre de usuario, sin exponer la contraseña.
      * @param userName Nombre de usuario.
-     * @return Modelo del usuario si existe.
+     * @return Modelo del usuario si existe, sin contraseña.
      */
-    public UserModel findByUserName(String userName) {
-        return userRepository.findByUserName(userName)
-                .map(userConverter::entityToModel)
+    public UserGetModel findByUserName(String userName) {
+        User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new ResourceNotFoundGlobalException(ErrorCode.USER_NOT_FOUND));
+        return UserGetConverter.entityToModel(user);
     }
 
     /**

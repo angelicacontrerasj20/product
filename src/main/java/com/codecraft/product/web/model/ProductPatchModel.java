@@ -12,6 +12,5 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class ProductPatchModel implements Serializable {
-    private BigDecimal price;
-
+    private Boolean active;
 }

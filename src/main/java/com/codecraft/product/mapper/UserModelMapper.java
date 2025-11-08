@@ -1,4 +1,4 @@
-package com.codecraft.product.converter;
+package com.codecraft.product.mapper;
 
 import com.codecraft.product.util.DateUtil;
 import com.codecraft.product.web.model.UserModel;

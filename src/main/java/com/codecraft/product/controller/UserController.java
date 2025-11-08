@@ -2,6 +2,7 @@ package com.codecraft.product.controller;
 
 import com.codecraft.product.domain.entity.User;
 import com.codecraft.product.service.UserService;
+import com.codecraft.product.web.model.UserGetModel;
 import com.codecraft.product.web.model.UserModel;
 import com.codecraft.product.web.model.UserUpdateModel;
 import com.codecraft.product.web.model.UserUpdatePasswordModel;
@@ -89,5 +90,16 @@ public class UserController {
     @Operation(summary = "Buscar usuario por nombre, apellido paterno o materno (parcial)", description = "Consulta de usuario por cualquier coincidencia parcial en nombre, apellido paterno o materno.")
     public List<UserModel> findByNameAndSurnameLike(@RequestParam String searchText) {
         return userService.findByNameAndSurnameLike(searchText);
+    }
+
+    /**
+     * Endpoint para buscar un usuario por su nombre de usuario.
+     * @param userName Nombre de usuario.
+     * @return Modelo del usuario si existe.
+     */
+    @GetMapping("/username/{userName}")
+    @Operation(summary = "Consulta de usuario por nombre de usuario", description = "Consulta de usuario por su nombre de usuario.")
+    public UserGetModel findByUserName(@PathVariable String userName) {
+        return userService.findByUserName(userName);
     }
 }

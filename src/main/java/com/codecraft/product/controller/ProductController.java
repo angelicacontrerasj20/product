@@ -55,16 +55,17 @@ public class ProductController {
     public Optional<ProductAddModel> findById(@PathVariable Long id) {
         return productService.findById(id);
     }
+
     /**
-     * Endpoint para actualizar el precio de un producto por ID.
+     * Endpoint para actualizar el estado activo/inactivo de un producto por ID.
      * @param id ID del producto.
-     * @param productPatchModel Modelo con el nuevo precio.
+     * @param activeStatus Modelo con el nuevo estado activo.
      * @return Modelo actualizado del producto.
      */
-    @PatchMapping("/{id}")
-    @Operation(summary = "Actualización de precio", description = "Actualiza el precio del producto por ID.")
-    public ProductModel updatePrice(@PathVariable Long id, @RequestBody ProductPatchModel productPatchModel) {
-        return productService.updateProductDescription(id,productPatchModel);
+    @PatchMapping("/{id}/active")
+    @Operation(summary = "Actualizar estado activo", description = "Actualiza el estado activo/inactivo del producto por ID.")
+    public ProductModel updateActiveStatus(@PathVariable Long id, @RequestBody ProductPatchModel activeStatus) {
+        return productService.updateProductActiveStatus(id, activeStatus.getActive());
     }
 
     /**
