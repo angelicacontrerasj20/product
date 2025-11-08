@@ -15,6 +15,11 @@ public class JwtUtil {
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
 
+    /**
+     * Genera un token JWT para el usuario dado.
+     * @param username Nombre de usuario.
+     * @return Token JWT.
+     */
     public static String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -24,6 +29,11 @@ public class JwtUtil {
                 .compact();
     }
 
+    /**
+     * Extrae el nombre de usuario del token JWT.
+     * @param token Token JWT.
+     * @return Nombre de usuario o null si el token es inválido o expirado.
+     */
     public static String getUsernameFromToken(String token) {
         try {
             Claims claims = Jwts.parser()

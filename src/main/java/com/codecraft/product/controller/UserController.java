@@ -19,6 +19,10 @@ import java.util.Optional;
  * @author Angelica Contreras Jeronimo
  * @date 2025-11-07
  */
+/**
+ * Controlador para gestionar las operaciones de usuarios.
+ * Expone endpoints para registro, consulta, actualización y autenticación de usuarios.
+ */
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Usuario", description = "Operaciones relacionadas con usuarios")

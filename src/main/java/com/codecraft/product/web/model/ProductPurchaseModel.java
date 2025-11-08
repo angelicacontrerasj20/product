@@ -15,3 +15,4 @@ public class ProductPurchaseModel implements Serializable{
     private Long userId;
     private List<ProductPurchaseItemModel> items;
 }
+

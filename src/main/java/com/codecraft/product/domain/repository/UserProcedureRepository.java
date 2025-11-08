@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Map;
 
 /**
- * Repository para procedimientos almacenados de usuario.
+ * Repositorio para ejecutar procedimientos almacenados relacionados con usuarios.
+ * Permite la ejecución de procedimientos para alta, modificación y consulta de usuarios.
  *
  * @author Angelica Contreras Jeronimo
  * @date 2025-11-07

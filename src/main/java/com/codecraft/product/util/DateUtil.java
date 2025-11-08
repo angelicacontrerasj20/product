@@ -2,6 +2,10 @@ package com.codecraft.product.util;
 
 import java.time.LocalDateTime;
 
+/**
+ * Utilidad para operaciones de fecha y hora.
+ * Proporciona métodos para obtener y convertir fechas y horas.
+ */
 public class DateUtil {
     public static LocalDateTime now() {
         return LocalDateTime.now();

@@ -10,7 +10,7 @@ import com.codecraft.product.mapper.UserModelMapper;
 import com.codecraft.product.util.DateUtil;
 import com.codecraft.product.util.JwtUtil;
 import com.codecraft.product.util.PasswordUtil;
-import com.codecraft.product.util.TraceUtil;
+import com.codecraft.product.util.TraceIdUtil;
 import com.codecraft.product.web.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,7 +52,7 @@ public class UserService {
      * @return Modelo del usuario agregado.
      */
     public UserModel addUser(UserModel userModel) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.addUser " + traceId + " " + userModel.getUserName());
         Date dateOfBirth = userModel.getDateOfBirth() != null ? Date.valueOf(userModel.getDateOfBirth()) : Date.valueOf("1900-01-01");
         Timestamp registerDate = userModel.getRegisterDate() != null ? DateUtil.toTimestamp(userModel.getRegisterDate()) : DateUtil.toTimestamp(DateUtil.now());
@@ -82,7 +82,7 @@ public class UserService {
      * @return Modelo actualizado del usuario.
      */
     public UserModel updateUser(UserUpdateModel userUpdateModel) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.updateUser " + traceId + " " + userUpdateModel.getId());
         Map<String, Object> inParams = Map.of(
             "p_usuarioId", userUpdateModel.getId(),
@@ -106,7 +106,7 @@ public class UserService {
      * @return Modelo actualizado del usuario.
      */
     public UserModel updatePassword(Long id, UserUpdatePasswordModel userUpdatePasswordModel) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.updatePassword " + traceId + " " + id);
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isPresent()) {
@@ -130,7 +130,7 @@ public class UserService {
      * @return Optional con el modelo del usuario si existe.
      */
     public Optional<UserModel> findById(Long id) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.findById " + traceId + " " + id);
         return userRepository.findById(id).map(userConverter::entityToModel);
     }
@@ -140,7 +140,7 @@ public class UserService {
      * @return Lista de modelos de usuario.
      */
     public List<UserModel> listUsers() {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.listUsers " + traceId);
         return userRepository.findAll().stream()
             .map(userConverter::entityToModel)
@@ -153,7 +153,7 @@ public class UserService {
      * @return Modelo del usuario si existe, sin contraseña.
      */
     public UserGetModel findByUserName(String userName) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.findByUserName " + traceId + " " + userName);
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new ResourceNotFoundGlobalException(ErrorCode.USER_NOT_FOUND));
@@ -166,7 +166,7 @@ public class UserService {
      * @return Token JWT si la autenticación es exitosa.
      */
     public String authenticateUser(LoginRequestModel loginRequestModel) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.authenticateUser " + traceId + " " + loginRequestModel.getUsername());
         try {
             User user = userRepository.findByUserName(loginRequestModel.getUsername())
@@ -180,7 +180,7 @@ public class UserService {
             }
         }
         catch (Exception ex) {
-            logger.error("Error inesperado en login: {}", ex.getMessage(), ex);
+            logger.error("UserService.authenticateUser " + traceId + " Error inesperado en login: {}", ex.getMessage(), ex);
             throw new ResourceNotFoundGlobalException(ErrorCode.USER_PASSWORD_INVALID);
         }
     }
@@ -192,7 +192,7 @@ public class UserService {
      * @return Lista de modelos de usuario que coinciden parcialmente en cualquier campo.
      */
     public List<UserModel> findByNameAndSurnameLike(String searchText) {
-        String traceId = TraceUtil.generateTraceId();
+        String traceId = TraceIdUtil.getOrCreateTraceId();
         logger.info("UserService.findByNameAndSurnameLike " + traceId + " " + searchText);
         if (searchText == null || searchText.trim().isEmpty()) {
             return List.of();

@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Convierte el resultado de un procedimiento almacenado de usuario a UserModel o a un Map de error.
+ * Convierte el resultado de un procedimiento almacenado en un modelo específico.
+ * Utilizado para mapear resultados de procedimientos a modelos de negocio.
  */
 public class ProcedureResultAddConverter {
     private static final Logger logger = LogManager.getLogger(ProcedureResultAddConverter.class);

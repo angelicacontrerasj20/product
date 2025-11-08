@@ -7,6 +7,10 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entidad que representa el inventario de un producto en la base de datos.
+ * Incluye cantidad, fechas y relación con el producto.
+ */
 @Getter
 @Setter
 @Entity

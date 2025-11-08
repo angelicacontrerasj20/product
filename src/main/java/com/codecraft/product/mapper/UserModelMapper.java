@@ -5,7 +5,8 @@ import com.codecraft.product.web.model.UserModel;
 import java.util.Map;
 
 /**
- * Mapper para convertir un Map<String, Object> en un UserModel.
+ * Mapper para convertir resultados de procedimientos a modelos de usuario.
+ * Facilita el mapeo de datos entre la base y los modelos de negocio.
  */
 public class UserModelMapper {
     /**
@@ -56,4 +57,3 @@ public class UserModelMapper {
         return model;
     }
 }
-

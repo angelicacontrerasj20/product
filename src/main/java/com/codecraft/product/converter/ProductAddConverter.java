@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 
 /**
  * Conversor para modelos de producto con inventario.
+ * Convierte entidades Product y ProductInventory en modelos ProductAddModel.
+ * Utilizado para la respuesta de productos con inventario.
  */
 public class ProductAddConverter {
     /**

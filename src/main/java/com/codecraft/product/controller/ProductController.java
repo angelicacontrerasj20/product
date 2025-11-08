@@ -1,11 +1,7 @@
 package com.codecraft.product.controller;
 
 import com.codecraft.product.service.ProductService;
-import com.codecraft.product.web.model.ProductAddModel;
-import com.codecraft.product.web.model.ProductModel;
-import com.codecraft.product.web.model.ProductPatchModel;
-import com.codecraft.product.web.model.ProductPurchaseModel;
-import com.codecraft.product.web.model.SaleModel;
+import com.codecraft.product.web.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,8 @@ import java.util.Optional;
 
 /**
  * Controlador REST para la gestión de productos y operaciones relacionadas.
+ * Controlador para gestionar las operaciones de productos.
+ * Expone endpoints para consulta, registro, actualización y eliminación de productos.
  */
 @RestController
 @RequestMapping("/products")
@@ -68,16 +66,6 @@ public class ProductController {
         return productService.updateProductActiveStatus(id, activeStatus.getActive());
     }
 
-    /**
-     * Endpoint para comprar múltiples productos en una sola transacción.
-     * @param request Modelo con los datos de la compra múltiple.
-     * @return Modelo de la venta realizada.
-     */
-    @PostMapping("/buy-multiple")
-    @Operation(summary = "Venta de Productos", description = "Venta de productos por usuario.")
-    public SaleModel buyMultipleProducts(@RequestBody ProductPurchaseModel request) {
-        return productService.buyMultipleProducts(request);
-    }
 
     /**
      * Endpoint para actualizar todos los datos de un producto por ID.
@@ -87,7 +75,7 @@ public class ProductController {
      */
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar el producto", description = "Actualización de descripcion, stock, precio y si se encuentra activo.")
-    public ProductAddModel updateProduct(@PathVariable Long id, @RequestBody ProductModel productModel) {
+    public ProductAddModel updateProduct(@PathVariable Long id, @RequestBody ProductUpdateModel productModel) {
         return productService.updateProduct(id, productModel);
     }
 

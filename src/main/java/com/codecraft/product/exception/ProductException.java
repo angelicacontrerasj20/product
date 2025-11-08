@@ -1,5 +1,9 @@
 package com.codecraft.product.exception;
 
+/**
+ * Excepción personalizada para errores de producto.
+ * Se lanza cuando ocurre un error específico en operaciones de producto.
+ */
 public class ProductException extends RuntimeException {
     private final String errorCode;
 
@@ -12,4 +16,3 @@ public class ProductException extends RuntimeException {
         return errorCode;
     }
 }
-

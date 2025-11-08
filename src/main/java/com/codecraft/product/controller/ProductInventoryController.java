@@ -11,6 +11,7 @@ import java.util.Optional;
 
 /**
  * Controlador REST para la gestión de inventario de productos.
+ * Expone endpoints para consultar, agregar y eliminar inventario de productos.
  */
 @RestController
 @RequestMapping("/inventory")

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Conversor para entidades y modelos de usuario.
+ * Convierte entidades User en modelos UserModel y viceversa.
+ * Utilizado para la gestión de usuarios en la capa de servicio y controlador.
  */
 @Component
 public class UserConverter {

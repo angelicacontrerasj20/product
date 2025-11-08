@@ -7,6 +7,10 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Entidad que representa a un usuario en la base de datos.
+ * Incluye datos personales, credenciales y relaciones con ventas y auditoría.
+ */
 @Getter
 @Setter
 @Entity
@@ -25,7 +29,7 @@ public class User {
     @Column(name = "nombre_usuario", length = 15, nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "contrasenia", length = 100, nullable = false)
+    @Column(name = "contrasenia", length = 50, nullable = false)
     private String password;
 
     @Column(name = "primer_nombre", length = 50, nullable = false)

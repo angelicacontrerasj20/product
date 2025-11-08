@@ -5,6 +5,10 @@ import com.codecraft.product.web.model.UserGetModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * Convierte entidades User en modelos UserGetModel para respuestas sin contraseña.
+ * Utilizado en endpoints que no deben exponer la contraseña del usuario.
+ */
 @Component
 public class UserGetConverter {
 

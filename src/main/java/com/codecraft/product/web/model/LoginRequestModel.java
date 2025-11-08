@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Modelo para recibir datos de login en formato JSON.
+ * Modelo para la petición de login de usuario.
+ * Contiene usuario y contraseña para autenticación.
  */
 @Getter
 @Setter
@@ -12,4 +13,3 @@ public class LoginRequestModel {
     private String username;
     private String password;
 }
-

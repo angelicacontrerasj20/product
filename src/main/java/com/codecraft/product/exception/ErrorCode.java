@@ -14,8 +14,8 @@ public class ErrorCode {
     public static final String PRODUCT_INACTIVE = "40905";
     public static final String PRODUCT_NO_STOCK = "40906";
     public static final String PRODUCT_NO_INVENTORY = "40907";
-    public static final String USER_PASSWORD_INVALID = "USER_PASSWORD_INVALID";
-    public static final String USER_LOGIN_BLOCKED = "USER_LOGIN_BLOCKED";
+    public static final String USER_PASSWORD_INVALID = "40908";
+    public static final String USER_LOGIN_BLOCKED = "40909";
     public static final String GENERAL_ERROR = "50000";
     // Puedes agregar más códigos según tus necesidades
 
