@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "/*{\r\n    \"userName\": \"angie.contreras\",\r\n    \"password\": \"1Perrito\",\r\n    \"firstName\": \"Angelica\",\r\n    \"lastName\": \"Contreras\",\r\n    \"middleName\": \"Jeronimo\",\r\n    \"dateOfBirth\": \"1995-02-20\",\r\n    \"gender\": \"F\",\r\n    \"stateOfBirth\": \"Oaxaca\"\r\n}*/\r\n\r\n{\r\n    \"userName\": \"juan.lopez\",\r\n    \"password\": \"1Perrito\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Lopez\",\r\n    \"middleName\": \"Lopez\",\r\n    \"dateOfBirth\": \"1996-02-20\",\r\n    \"gender\": \"M\",\r\n    \"stateOfBirth\": \"Oaxaca\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"juan.lopez\",\r\n    \"password\": \"1Perrito\",\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Lopez\",\r\n    \"middleName\": \"Lopez\",\r\n    \"dateOfBirth\": \"1996-02-20\",\r\n    \"gender\": \"M\",\r\n    \"stateOfBirth\": \"Oaxaca\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -48,7 +48,25 @@
 					"name": "Consulta por ID",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Origin",
+								"value": "http://localhost:3000",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -58,7 +76,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users?Origin=http://localhost:3000",
+							"raw": "http://localhost:8080/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -70,7 +88,8 @@
 							"query": [
 								{
 									"key": "Origin",
-									"value": "http://localhost:3000"
+									"value": "http://localhost:3000",
+									"disabled": true
 								}
 							]
 						}
@@ -90,7 +109,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 12,\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Lopez\",\r\n    \"middleName\": \"Lopez\",\r\n    \"dateOfBirth\": \"1996-03-20\",\r\n    \"gender\": \"H\",\r\n    \"stateOfBirth\": \"Oaxaca\"\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"firstName\": \"Juan\",\r\n    \"lastName\": \"Perez\",\r\n    \"middleName\": \"Garcia\",\r\n    \"dateOfBirth\": \"1996-07-25\",\r\n    \"gender\": \"M\",\r\n    \"stateOfBirth\": \"Cdmx\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,7 +144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currentPassword\": \"12Perrito\",\r\n    \"newPassword\": \"1Perrito\"\r\n}",
+							"raw": "{\r\n    \"currentPassword\": \"1Perrito\",\r\n    \"newPassword\": \"12Perrito\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -133,7 +152,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/12/password",
+							"raw": "http://localhost:8080/users/1/password",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -141,7 +160,7 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"12",
+								"1",
 								"password"
 							]
 						}
@@ -180,7 +199,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users/username/angie.contreras",
+							"raw": "http://localhost:8080/users/username/juan.lopez",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -189,7 +208,7 @@
 							"path": [
 								"users",
 								"username",
-								"angie.contreras"
+								"juan.lopez"
 							]
 						}
 					},
@@ -295,7 +314,7 @@
 							"query": [
 								{
 									"key": "active",
-									"value": "false",
+									"value": "true",
 									"disabled": true
 								}
 							]
@@ -316,7 +335,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Mantecadas\",\r\n    \"description\": \"Mantecadas con Nuez\",\r\n    \"price\": \"32\",\r\n    \"stock\": 15,\r\n    \"active\": false\r\n}",
+							"raw": "{\r\n    \"description\": \"Cafe Colombiano\",\r\n    \"price\": \"33.50\",\r\n    \"stock\": 10,\r\n    \"active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -350,7 +369,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/products/7",
+							"raw": "http://localhost:8080/products/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -358,42 +377,7 @@
 							"port": "8080",
 							"path": [
 								"products",
-								"7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Compra de Productos por Usuario",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Origin",
-								"value": "http://localhost:3000",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"userId\": 12,\r\n  \"items\": [\r\n    { \"productId\": 1, \"quantity\": 2 },\r\n    { \"productId\": 2, \"quantity\": 1 },\r\n    { \"productId\": 3, \"quantity\": 1 },\r\n    { \"productId\": 4, \"quantity\": 1 },\r\n    { \"productId\": 5, \"quantity\": 1 }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/products/buy-multiple",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"buy-multiple"
+								"1"
 							]
 						}
 					},
@@ -407,7 +391,8 @@
 							{
 								"key": "Origin",
 								"value": "http://localhost:3000",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -436,7 +421,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/inventory/6",
+							"raw": "http://localhost:8080/inventory/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -444,7 +429,7 @@
 							"port": "8080",
 							"path": [
 								"inventory",
-								"6"
+								"1"
 							]
 						}
 					},
@@ -494,7 +479,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"angie.contreras\",\r\n  \"password\": \"1Perrito\"\r\n}",
+							"raw": "{\r\n  \"username\": \"juan.lopez\",\r\n  \"password\": \"12Perrito\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -502,15 +487,89 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/auth/login",
+							"raw": "http://localhost:8081/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Venta",
+			"item": [
+				{
+					"name": "Venta de Productos por Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "http://localhost:3000",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 1,\r\n  \"items\": [\r\n    { \"productId\": 1, \"quantity\": 2 }\r\n    //{ \"productId\": 2, \"quantity\": 1 },\r\n    //{ \"productId\": 3, \"quantity\": 1 },\r\n    //{ \"productId\": 4, \"quantity\": 1 },\r\n    //{ \"productId\": 5, \"quantity\": 1 }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/sales/buy-multiple",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"auth",
-								"login"
+								"sales",
+								"buy-multiple"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta de Ventas por Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Origin",
+								"value": "http://localhost:3000",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 12,\r\n  \"items\": [\r\n    { \"productId\": 1, \"quantity\": 2 },\r\n    { \"productId\": 2, \"quantity\": 1 },\r\n    { \"productId\": 3, \"quantity\": 1 },\r\n    { \"productId\": 4, \"quantity\": 1 },\r\n    { \"productId\": 5, \"quantity\": 1 }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/sales/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sales",
+								"user",
+								"1"
 							]
 						}
 					},
